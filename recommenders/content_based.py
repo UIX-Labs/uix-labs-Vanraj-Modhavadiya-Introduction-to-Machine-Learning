@@ -1,4 +1,4 @@
-from recommenders import data_movies
+from recommenders import data_movies, default_poster_url
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import linear_kernel
 import pandas as pd
@@ -9,7 +9,7 @@ def matching_score(a,b):
    return fuzz.ratio(a,b)
 
 def extract_title(title):
-   ##################################################################################################################################
+   
    year = title[len(title)-5:len(title)-1]
    
    # some movies do not have the info about year in the column title. So, we should take care of the case as well.
@@ -20,17 +20,16 @@ def extract_title(title):
    else:
       return title
    
-    #################################################################################################################################
+   
 # the function to extract years
 def extract_year(title):
-   ##################################################################################################################################
+   
    year = title[len(title)-5:len(title)-1]
    # some movies do not have the info about year in the column title. So, we should take care of the case as well.
    if year.isnumeric():
       return int(year)
    else:
       return np.nan
-    ##################################################################################################################################
 
     
 def content_based_recommendation(movie):
@@ -55,14 +54,17 @@ def content_based_recommendation(movie):
     movies['genres'] = movies['genres'].str.replace('Film-Noir','Noir')
 
     ############################################################################################
-    # create an object for TfidfVectorizer
-    tfidf_vector = TfidfVectorizer(stop_words='english')
-    # apply the object to the genres column
-    tfidf_matrix = tfidf_vector.fit_transform(movies['genres'])
+    '''
+    complete the code below:
+    '''
 
-    
-    # create the cosine similarity matrix
-    sim_matrix = linear_kernel(tfidf_matrix,tfidf_matrix) 
+
+    # create an object for TfidfVectorizer: tfidf_vector
+    tfidf_vector = None
+    # apply the object to the genres column: tfidf_matrix
+    tfidf_matrix = None
+    # create the cosine similarity matrix: sim_matrix
+    sim_matrix = None
     ############################################################################################
     # a function to convert index to title_year
     def get_title_year_from_index(index):
@@ -117,9 +119,11 @@ def content_based_recommendation(movie):
             for i,s in similar_movies[:how_many]:
                 title = get_title_year_from_index(i)
                 movie_record = data_movies[data_movies.title == title].iloc[0]
+                movie_poster = str(movie_record.poster_link)
                 response.append({
                                     "movieId": int(movie_record.movieId),
                                     "title": str(title),
+                                    "image": movie_poster if movie_poster != "nan" else default_poster_url,
                                     "genres": str(movie_record.genres).split("|")
                                 })
         return {'message': title_string, "results": response}

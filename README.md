@@ -1,1 +1,1 @@
-# uix-labs-ml-course-angelo-uix
+# instalearn_ml

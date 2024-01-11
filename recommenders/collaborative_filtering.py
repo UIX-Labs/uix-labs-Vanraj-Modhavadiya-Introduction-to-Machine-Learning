@@ -1,4 +1,4 @@
-from recommenders import data_movies, data_ratings
+from recommenders import data_movies, data_ratings, default_poster_url
 import pandas as pd
 import numpy as np
 from scipy.sparse import csr_matrix
@@ -36,21 +36,25 @@ def collaborative_recommendation(movie):
 
     
 
-    ###########################################################################################
-    # Combining the data on same column
-    df= pd.merge(data_ratings, movies, on= 'movieId')
-    movies_df= df.pivot_table(index="title",columns='userId',values='rating').fillna(0)
-    #print(movies_df)
+    ######################################################################################################################################################################
+    '''
+    Complete the code below:
+    # Combining the data on same column: data_ratings and movies using pivot table => movies_df
     # Now converting into metrix
-    movies_df_metrix= csr_matrix(movies_df.values)
-    #print(movies_df_metrix)
     # Building the model
-    model_knn= NearestNeighbors(metric= 'cosine', algorithm='brute')
+    # Fitting the model 
+    '''
+
+    # Combining the data on same column: data_ratings and movies using pivot table => movies_df
+    movies_df= None
+    # Now converting into metrix
+    movies_df_metrix= None
+    # Building the model
+    model_knn= None
 
     # Fitting the model 
-    model_knn.fit(movies_df_metrix)
     
-    ###############################################################################################
+    ##########################################################################################################################################################
 
 
     index_value = movies_df.index.get_loc(closest_title)
@@ -69,9 +73,11 @@ def collaborative_recommendation(movie):
         else:
             title = movies_df.index[sorted_neighbor_indices[i]]
             movie_record = data_movies[data_movies.title == title].iloc[0]
+            movie_poster = str(movie_record.poster_link)
             response.append({
                                     "movieId": int(movie_record.movieId),
                                     "title": str(title),
+                                    "image": movie_poster if movie_poster != "nan" else default_poster_url,
                                     "genres": str(movie_record.genres).split("|")
                                 })
 

@@ -18,15 +18,20 @@ data_movies => file path : 'data_files/movies.csv'
 data_posters => file path : 'data_files/movie_poster.csv'
 
 '''
-data_ratings =None # empty df
-data_movies = None # empty df
-data_posters = None # empty df
+data_ratings = pd.read_csv('data_files/ratings.csv')
+data_movies = pd.read_csv('data_files/movies.csv')
+data_posters = pd.read_csv('data_files/movie_poster.csv')
 
+
+
+
+movies_df = pd.read_csv("movies.csv")
+ratings_df = pd.read_csv("ratings.csv")
 
 '''
 Uncomment the below line after you complete the code above.
 '''
-#data_movies = pd.merge(data_movies, data_posters, how="left", on="movieId")
+data_movies = pd.merge(data_movies, data_posters, how="left", on="movieId")
 
 #####################################################################################################################################
 

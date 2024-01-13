@@ -22,12 +22,6 @@ data_ratings = pd.read_csv('data_files/ratings.csv')
 data_movies = pd.read_csv('data_files/movies.csv')
 data_posters = pd.read_csv('data_files/movie_poster.csv')
 
-
-
-
-movies_df = pd.read_csv("movies.csv")
-ratings_df = pd.read_csv("ratings.csv")
-
 '''
 Uncomment the below line after you complete the code above.
 '''
